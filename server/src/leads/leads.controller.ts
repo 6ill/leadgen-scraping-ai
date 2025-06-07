@@ -16,8 +16,10 @@ export class LeadsController {
 
   @Post('search')
   async searchLeads(@Body() searchQueryDTO:SearchQueryDTO) {
-    const data = await this.leadsService.searchLeads(searchQueryDTO);
-    return { data }
+    await this.leadsService.searchLeads(searchQueryDTO);
+    return {
+      status: 'success'
+    }
   }
 
   @Post('enrich')

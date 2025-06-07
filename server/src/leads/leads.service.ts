@@ -16,15 +16,24 @@ export class LeadsService {
     ){}
 
     async getLeads(): Promise<Lead[]> {
-        return this.leadsRepo.find();
+        return this.leadsRepo.find({
+            order: {
+                updatedAt: 'DESC',
+            }
+        });
     }
 
-    async searchLeads(searchQueryDTO:SearchQueryDTO): Promise<Lead[]> {
+    async searchLeads(searchQueryDTO:SearchQueryDTO): Promise<void> {
         const searchResults = await this.scraperService.scrapeYellowPages(searchQueryDTO);
 
-        const companies = await this.leadsRepo.save(searchResults);
-
-        return companies
+        await this.leadsRepo.upsert(
+            searchResults,
+            {
+                conflictPaths: ['domain'],
+                skipUpdateIfNoValuesChanged: true,
+                upsertType: 'on-conflict-do-update'
+            }
+        );
     }
 
     async enrichLeads(domains: string[]){
