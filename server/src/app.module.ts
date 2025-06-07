@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { LeadsModule } from './leads/leads.module';
 
 @Module({
   imports: [
@@ -8,7 +9,8 @@ import { DatabaseModule } from './database/database.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    DatabaseModule
+    DatabaseModule,
+    LeadsModule
   ],
   controllers: [],
   providers: [],

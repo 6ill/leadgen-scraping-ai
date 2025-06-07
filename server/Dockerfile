@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
+COPY tsconfig*.json ./
 
 # Install dependencies
 RUN npm install
