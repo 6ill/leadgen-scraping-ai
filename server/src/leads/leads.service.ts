@@ -4,6 +4,7 @@ import { ApolloService, LlmService, ScraperService } from './tools';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lead } from 'src/database/entity';
 import { In, Repository } from 'typeorm';
+import * as xlsx from 'xlsx';
 
 @Injectable()
 export class LeadsService {
@@ -70,6 +71,21 @@ export class LeadsService {
         } catch (error) {
             throw new InternalServerErrorException(error.message);
         }
+    }
+
+    async exportToExcel(): Promise<any> {
+        const leads = await this.getLeads();
+        const convertedLeads = leads.map(lead => {
+            return {
+                ...lead,
+                keywords: lead.keywords?.join(', ')
+            }
+        })
+        const workbook = xlsx.utils.book_new();
+        const worksheet = xlsx.utils.json_to_sheet(leads);
+        xlsx.utils.book_append_sheet(workbook, worksheet);
+        const buffer = xlsx.write(workbook, {type: 'buffer', bookType:'xlsx'});
+        return buffer;
     }
 
     private calculatePriorityScore(icpScore: number, keywordScore: number): number {
