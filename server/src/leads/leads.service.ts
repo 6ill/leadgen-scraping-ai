@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { SearchQueryDTO } from './dtos';
+import { CompanyDTO, SearchQueryDTO } from './dtos';
 import { ApolloService, LlmService, ScraperService } from './tools';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lead } from 'src/database/entity';
@@ -25,9 +25,17 @@ export class LeadsService {
 
     async searchLeads(searchQueryDTO:SearchQueryDTO): Promise<void> {
         const searchResults = await this.scraperService.scrapeYellowPages(searchQueryDTO);
+        
+        const uniqueLeadsMap = new Map<string, CompanyDTO>();
+        // Deduplicate the scraped entries
+        searchResults.forEach(lead => {
+            uniqueLeadsMap.set(lead.domain, lead);
+        });
 
+        // Convert the Map values back to an array
+        const leadsToUpsert = Array.from(uniqueLeadsMap.values());
         await this.leadsRepo.upsert(
-            searchResults,
+            leadsToUpsert,
             {
                 conflictPaths: ['domain'],
                 skipUpdateIfNoValuesChanged: true,
