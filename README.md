@@ -22,12 +22,11 @@ This project is a full-stack B2B lead generation tool built with a modern techno
 
 Based on the application's API, the key features include:
 
--   **Intelligent Lead Search:** Initiates a deep search based on industry and location to discover potential B2B leads from various web sources.
--   **Automated Data Enrichment:** Automatically enriches lead data by finding crucial firmographic information for a given list of company domains.
+-   **Lead Search:** Initiates a search based on industry and location to discover potential B2B leads from yellowpages.com.
+-   **Data Enrichment:** Automatically enriches lead data by finding crucial firmographic information for a given list of company domains.
 -   **AI-Powered Lead Evaluation:** Utilizes a Large Language Model (Gemini) to evaluate a selection of leads, generating an ICP (Ideal Customer Profile) score, keyword relevance score, and a suggested "outreach angle" to personalize sales efforts.
--   **Comprehensive Lead Management:** Provides a clean interface to view, sort, and filter all discovered leads.
+-   **Comprehensive Lead Management:** Provides a clean interface to view and sort all discovered leads.
 -   **Data Export:** Allows users to export lead lists to CSV or Excel for use in other CRM or sales tools.
-
 ---
 
 
@@ -123,5 +122,6 @@ npm install
 # Run the development server
 npm start
 ```
+---
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
