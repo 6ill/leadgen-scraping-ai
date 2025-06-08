@@ -1,3 +1,5 @@
+
+
 import React, { useState, useMemo } from "react";
 import {
     Table,
@@ -312,9 +314,8 @@ const LeadsTable: React.FC<LeadsTableProps> = ({
                     ) : sortedLeads.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={14} align="center">
-                                No leads found. Try a different search.
-                            </TableCell>
-                        </TableRow>
+                                No leads found. Begin your journey by exploring and discovering potential opportunities!
+                            </TableCell>    </TableRow>
                     ) : (
                         sortedLeads.map((lead) => (
                             <React.Fragment key={lead.id}>
