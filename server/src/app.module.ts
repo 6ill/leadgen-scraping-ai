@@ -7,7 +7,7 @@ import { LeadsModule } from './leads/leads.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: '../.env',
     }),
     DatabaseModule,
     LeadsModule
