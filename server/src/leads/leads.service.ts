@@ -78,11 +78,11 @@ export class LeadsService {
         const convertedLeads = leads.map(lead => {
             return {
                 ...lead,
-                keywords: lead.keywords?.join(', ')
+                keywords: lead.keywords?.toString()
             }
         })
         const workbook = xlsx.utils.book_new();
-        const worksheet = xlsx.utils.json_to_sheet(leads);
+        const worksheet = xlsx.utils.json_to_sheet(convertedLeads);
         xlsx.utils.book_append_sheet(workbook, worksheet);
         const buffer = xlsx.write(workbook, {type: 'buffer', bookType:'xlsx'});
         return buffer;
